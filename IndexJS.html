@@ -1,0 +1,47 @@
+<script>
+
+var Section = function() {
+
+  var loading = '<h2>{page}</h2><p>Loading ...</p>';
+
+  function navigation(page) {
+    if (!$('#nav' + page).attr('class') != 'active') {
+      $('ul.navbar-nav').children().attr('class', '');
+      $('#nav' + page).attr('class', 'active');
+    }
+  };
+  
+  function render(response, page) {
+    var content = $('#content');
+    content.empty();
+    content.append(response);
+      
+    Section.end(page);
+  };
+  
+  return {
+    init: function(page, request) {
+      $('html,body').css('cursor','wait');
+      console.log('init:' + page);
+      navigation(page);
+  
+      var content = $('#content');
+      content.empty();
+      content.append(loading.replace('{page}', $('#nav' + page).text()));
+    }, 
+    
+    load: function(page, request) {
+      console.log('load:' + page);
+      google.script.run.withSuccessHandler(render).withUserObject(page).load(page, request);
+    },
+    
+    end: function(page) {
+      console.log('end:' + page);
+      // safety
+      navigation(page);
+      $('html,body').css('cursor','default');    
+    }
+  }
+}();
+
+</script>

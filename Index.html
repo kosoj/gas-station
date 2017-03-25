@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base target="_top">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" type='text/css'>
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Oswald' type='text/css'>
+    <?!= Html.include('IndexCSS'); ?>
+    <?!= Html.include('IndexJS'); ?>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js">
+    </script>
+    <script>
+      $(function() {
+        render('<?= menu[0].id ?>'); 
+        
+        $('ul.main > li > a').click(function() {
+           render($(this).prop('title'));
+        });
+      });
+
+      var callbacks = $.Callbacks();
+      callbacks.add(Section.init);
+      callbacks.add(Section.load);
+
+      function render(section, request) {
+        callbacks.fire(section, request);
+      }
+    </script>
+  </head>
+  <body>
+    <div class="container">
+      <!-- Header -->
+      <nav class="navbar navbar-default navbar-fixed-top navbar-inverse">
+        <div class="container">
+          <ul class="nav navbar-nav main menu">
+            <? for (var i = 0, len = menu.length; i < len; i++) { ?>
+            <li id="nav<?= menu[i].id ?>"><a href="#" title="<?= menu[i].id ?>" onclick="return false;"><?= menu[i].name ?></a></li>
+            <? } ?>
+          </ul>
+          <div class="navbar-header navbar-right">
+            <a id="title" class="navbar-brand" href="#"><?= props.title ?><small><?= props.tagline ?></small></a>
+          </div>
+        </div>
+      </nav>
+     
+      <!-- Content -->
+      <div id="content" class="content page-header">
+      </div>
+      
+      <!-- Footer -->
+      <div class="small">
+        <nav class="navbar navbar-default navbar-fixed-bottom">
+          <div class="container">
+            <p class="navbar-text">2017 Painless torture Inc.</p>
+              <div class="container-fluid">
+                <ul class="nav navbar-nav navbar-right">
+                <li><a href="https://developers.google.com/apps-script">Google App Script</a></li>
+                <li><a href="http://getbootstrap.com">Bootstrap</a></li>
+                <li><a href="https://www.google.com/fonts">Google fonts</a></li>
+              </ul>
+            </div>
+          </div>
+        </nav>
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,41 @@
+<h2>Welcome</h2>
+
+<?!= Html.include('SnippetPeriod', {'year': year, 'month': month}) ?>
+
+<div class="panel panel-default">
+  <div class="panel-body">
+    <p>
+      <span class="topic">Lorem ipsum</span> dolor sit amet, consectetur adipiscing elit. Fusce risus turpis, mollis in orci in, ornare gravida erat. Etiam mattis venenatis justo a volutpat. Quisque venenatis, est sit amet dignissim efficitur, dolor mi sagittis metus, nec accumsan ipsum elit volutpat lacus. Morbi vel tincidunt lectus. Proin suscipit, tellus eu rutrum luctus, enim tortor ullamcorper metus, sed condimentum massa nunc ut lorem. Donec libero ex, tempus eget tortor eget, faucibus ornare mi. Sed tincidunt in quam vitae mattis. Sed sodales ac purus sed vehicula. Etiam dapibus nisi tincidunt mollis sollicitudin. Sed interdum nec elit ultricies finibus. Sed eu venenatis justo. Proin lectus dui, pretium eget viverra in, varius vitae ipsum.
+    </p>
+  </div>
+</div>
+
+
+<script>
+  var year = '<?= year ?>';
+  var month = '<?= month ?>';
+  
+  function renderPeriod(year, month) {
+    var request = {
+      'year': year,
+      'month': month
+      };
+      render('welcome', request);
+  }
+  
+  $(function() {
+    $('button.month').click(function() {
+      renderPeriod(year, $(this).text());
+    });
+    
+    $('button.year').click(function() {
+      var current = new Date();
+      var _year = parseInt($(this).text());
+      var _month = parseInt((_year < year) ? 12 : 1);
+      if (_year == current.getFullYear()) {
+        _month = current.getMonth() + 1;
+      }
+      renderPeriod(_year, _month);
+    });
+  });
+</script>
