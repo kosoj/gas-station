@@ -13,3 +13,32 @@
   </div>
 </div>
 <br/>
+
+<script>
+  var year = '<?= year ?>';
+  var month = '<?= month ?>';
+  
+  function renderPeriod(year, month) {
+    var request = {
+      'year': year,
+      'month': month
+      };
+      render('<?= page ?>', request);
+  }
+  
+  $(function() {
+    $('button.month').click(function() {
+      renderPeriod(year, $(this).text());
+    });
+    
+    $('button.year').click(function() {
+      var current = new Date();
+      var _year = parseInt($(this).text());
+      var _month = parseInt((_year < year) ? 12 : 1);
+      if (_year == current.getFullYear()) {
+        _month = current.getMonth() + 1;
+      }
+      renderPeriod(_year, _month);
+    });
+  });
+</script>

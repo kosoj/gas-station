@@ -1,6 +1,6 @@
 <h2>Welcome</h2>
 
-<?!= Html.include('SnippetPeriod', {'year': year, 'month': month}) ?>
+<?!= Html.include('SnippetPeriod', {'year': year, 'month': month, 'page': 'welcome'}) ?>
 
 <div class="panel panel-default">
   <div class="panel-body">
@@ -9,33 +9,3 @@
     </p>
   </div>
 </div>
-
-
-<script>
-  var year = '<?= year ?>';
-  var month = '<?= month ?>';
-  
-  function renderPeriod(year, month) {
-    var request = {
-      'year': year,
-      'month': month
-      };
-      render('welcome', request);
-  }
-  
-  $(function() {
-    $('button.month').click(function() {
-      renderPeriod(year, $(this).text());
-    });
-    
-    $('button.year').click(function() {
-      var current = new Date();
-      var _year = parseInt($(this).text());
-      var _month = parseInt((_year < year) ? 12 : 1);
-      if (_year == current.getFullYear()) {
-        _month = current.getMonth() + 1;
-      }
-      renderPeriod(_year, _month);
-    });
-  });
-</script>
